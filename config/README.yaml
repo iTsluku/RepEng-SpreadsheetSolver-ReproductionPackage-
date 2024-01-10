@@ -1,0 +1,59 @@
+# timeout description
+# upper bound for solver method in seconds
+timeout: 100
+
+# criterion description
+# only max or min
+criterion: max
+
+# decision variables description
+# decision variable name and profit
+# decision variable name unique
+decision_variables:
+  # define decision variable foo, set profit to 5
+  - - foo
+    - 5
+  # define decision variable bar, set profit to 10
+  - - bar
+    - 10
+    
+# decision variable_constraints description
+# decision variable name, comparison operator, bounding value
+# only <=, <, >=, >
+# referenced decision variables needs to be defined prior
+# required to define lower and upper bound for ever decision variable (to enure termination of the program)
+decision_variable_constraints:
+  # set foo constraints [0,100]
+  # foo lower bound: foo >= 0
+  - - foo
+    - '>='
+    - 0
+  # foo upper bound: foo <= 100
+  - - foo
+    - '<='
+    - 100
+  # set bar constraints [100,300)
+  # bar lower bound: bar >= 100
+  - - bar
+    - '>='
+    - 100
+  # bar upper bound: bar < 300
+  - - bar
+    - '<'
+    - 300
+    
+# constraint variables description
+# constraint variables name, dependent decision variable names, cost values, comparison operator, bounding value
+# constraint variable name unique
+# referenced decision variables needs to be defined prior
+# only <=, <, >=, >
+constraint_variables:
+  # define constraint variable foobar
+  - - foobar
+    - - - foo
+        - 10
+      - - bar
+        - 20
+    - '<='
+    - 10000
+    

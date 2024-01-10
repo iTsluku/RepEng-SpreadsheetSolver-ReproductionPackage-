@@ -1,0 +1,35 @@
+timeout: 100
+criterion: max
+decision_variables:
+  - - duck
+    - 5
+  - - fish
+    - 4
+decision_variable_constraints:
+  - - duck
+    - '>='
+    - 0
+  - - duck
+    - '<='
+    - 400
+  - - duck
+    - '<='
+    - 500
+  - - fish
+    - '>='
+    - 0
+  - - fish
+    - '<='
+    - 300
+  - - fish
+    - '<='
+    - 400
+constraint_variables:
+  - - pellet supply
+    - - - duck
+        - 100
+      - - fish
+        - 125
+    - '<='
+    - 50000
+    
