@@ -16,7 +16,7 @@ from spreadsheet_solver.data_types import DecisionVariable
 class Timeout(Exception):
     """Exception raised when optimization problem can not be solved within a set time."""
 
-    def __init__(self, message="Invalid config file."):
+    def __init__(self, message="Invalid configs file."):
         self.message = message
         super().__init__(self.message)
 

@@ -8,8 +8,8 @@ SPDX-License-Identifier: FSFAP
 '''
 
 class InvalidConfig(Exception):
-    """Exception raised for invalid user input in the config file."""
+    """Exception raised for invalid user input in the configs file."""
 
-    def __init__(self, message="Invalid config file."):
+    def __init__(self, message="Invalid configs file."):
         self.message = message
         super().__init__(self.message)

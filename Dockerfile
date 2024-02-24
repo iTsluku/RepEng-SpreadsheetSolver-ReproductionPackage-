@@ -12,10 +12,12 @@ FROM ubuntu:22.04
 
 LABEL maintainer="Andreas Einwiller einwil01@ads.uni-passau.de"
 
+ENV HOME=/app
+
 # Copy artefacts
-COPY . /app/
+COPY . ${HOME}
 # Setup working directory
-WORKDIR /app
+WORKDIR ${HOME}
 
 # Install dependencies
 RUN apt-get update && apt-get install -y python3 python3-pip python3.10-venv
@@ -23,13 +25,13 @@ RUN pip3 install --upgrade pip
 
 # Create venv
 RUN python3 -m venv venv
-ENV PATH="/app/venv/bin:$PATH"
+ENV PATH="/app/venv/bin:${PATH}"
 
 # Install required packages
 RUN pip3 install -r requirements.txt
 
-# Make the paper config execution script executable
-RUN chmod +x run_paper_configurations.sh
+# Make the paper configs execution script executable
+RUN chmod +x ${HOME}/scripts/do_all.sh
 
 # Set default command that is run when the container is run based on this image
-CMD ["./run_paper_configurations.sh"]
+CMD ${HOME}/scripts/do_all.sh

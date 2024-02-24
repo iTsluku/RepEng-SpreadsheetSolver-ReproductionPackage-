@@ -16,13 +16,12 @@ The following steps are identical for container-based run.
 
 - Access the container interactively
     > docker run -it --name spreadsheet-solver spreadsheet-solver:1.0 /bin/bash
-- Run spreadsheet solver with specified config w.r.t. paper scenarios
+- Run spreadsheet solver with specified config w.r.t. paper scenario one, two or three
   ```bash
-  python main.py --config "config/head_first_data_analysis_chap3/config1.yaml"
-  python main.py --config "config/head_first_data_analysis_chap3/config2.yaml"
-  python main.py --config "config/head_first_data_analysis_chap3/config3.yaml"
+  python main.py --config "configs/head_first_data_analysis_chap3/scenario1.yaml"
+  python main.py --config "configs/head_first_data_analysis_chap3/scenario2.yaml"
+  python main.py --config "configs/head_first_data_analysis_chap3/scenario3.yaml"
   ```
-    
 - Exit container
     > exit
 
@@ -32,14 +31,14 @@ The following steps are not relevant for the functional replication, but make it
 
 - Run docker container with volume mount in interactive mode
   ```bash
-  docker run -v /user/path/to/my_config_dir:/app/my_config_dir/ \
+  docker run -v /user/path/to/my_config_dir:/app/configs/my_config_dir/ \
              -it \
              --name spreadsheet-solver \
              spreadsheet-solver:1.0 \
              /bin/bash
   ```
 - Run spreadsheet solver with config from mounted directory
-    > python main.py --config "my_config_dir/config.yaml"
+    > python main.py --config "configs/my_config_dir/config.yaml"
 - Exit container
     > exit
 

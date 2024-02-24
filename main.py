@@ -7,6 +7,7 @@ without any warranty. \
 SPDX-License-Identifier: FSFAP
 '''
 import argparse
+import os
 
 from spreadsheet_solver.config import Config, InvalidConfig
 from spreadsheet_solver.solver import Solver, Timeout
@@ -15,7 +16,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Spreadsheet solver.")
     parser.add_argument(
         "--config",
-        default="config.yaml",
+        default=os.path.join(os.path.dirname(os.path.abspath(__file__)),"configs/config.yaml"),
         help="Path to the configuration file.",
     )
     args = parser.parse_args()

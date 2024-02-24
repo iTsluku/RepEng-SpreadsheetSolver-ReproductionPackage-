@@ -6,9 +6,12 @@
 # without any warranty.
 # SPDX-License-Identifier: FSFAP
 
-PAPER_CONFIG_DIR="config/head_first_data_analysis_chap3/"
+# shellcheck disable=SC2046
+SCRIPT_PATH=$(dirname $(realpath -s "$0"))
+PAPER_CONFIG_DIR="$SCRIPT_PATH/../configs/head_first_data_analysis_chap3/"
 
 for config_file in "$PAPER_CONFIG_DIR"*.yaml; do
-    echo "Solving \"$config_file\":"
-    python main.py --config "$config_file"
+    # shellcheck disable=SC2027
+    echo "Solving "$(basename "$config_file")":"
+    python "$SCRIPT_PATH"/../main.py --config "$config_file"
 done
