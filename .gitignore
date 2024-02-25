@@ -1,5 +1,6 @@
 .gitmessage
-shared_dir/report.pdf
+shared_dir/
+report/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

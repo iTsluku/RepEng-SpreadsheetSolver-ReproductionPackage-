@@ -49,7 +49,9 @@ RUN pip3 install -r requirements.txt
 
 # Make scripts executable
 RUN chmod +x ${HOME}/scripts/do_all.sh
+RUN chmod +x ${HOME}/scripts/smoke.sh
 RUN chmod +x ${HOME}/scripts/build_report.sh
+
 
 # Clone report (into existing report/ directory)
 RUN git clone https://github.com/iTsluku/RepEng-SpreadsheetSolver-Report-.git report

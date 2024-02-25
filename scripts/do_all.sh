@@ -9,6 +9,9 @@
 SCRIPT_PATH=$(dirname $(realpath -s "$0"))
 PAPER_CONFIG_DIR="$SCRIPT_PATH/../configs/head_first_data_analysis_chap3/"
 
+echo "Running smoke test"
+(cd "$SCRIPT_PATH" && ./smoke.sh)
+
 echo "Running experiments"
 for config_file in "$PAPER_CONFIG_DIR"*.yaml; do
     echo "Running "$(basename "$config_file")""
@@ -16,4 +19,4 @@ for config_file in "$PAPER_CONFIG_DIR"*.yaml; do
 done
 
 echo "Building report"
-cd "$SCRIPT_PATH" && ./build_report.sh
+(cd "$SCRIPT_PATH" && ./build_report.sh)

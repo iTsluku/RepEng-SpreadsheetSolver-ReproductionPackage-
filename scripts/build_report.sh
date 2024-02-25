@@ -8,13 +8,14 @@
 
 SCRIPT_PATH=$(dirname $(realpath -s "$0"))
 
+RUN test -d "$SCRIPT_PATH"/../report || mkdir "$SCRIPT_PATH"/../report
 cd "$SCRIPT_PATH"/../report
 
 # Run make report
 make report
 
 # Move report.pdf to shared_dir/ (potentially mounted volume)
-RUN test -d shared_dir || mkdir shared_dir
+RUN test -d "$SCRIPT_PATH"/../shared_dir || mkdir "$SCRIPT_PATH"/../shared_dir
 mv report.pdf "$SCRIPT_PATH"/../shared_dir/
 
 # Run make clean
