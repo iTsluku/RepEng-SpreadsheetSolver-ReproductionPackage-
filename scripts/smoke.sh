@@ -39,10 +39,10 @@ for app in "${software[@]}"; do
     fi
 done
 
-# Packages to be invoked
+# Packages to be invoked (alt: parse dependencies via requirements.txt; time constraints...)
 packages=("pyyaml")
 
-# Check for Python packages using requirements.txt
+# Invoke Python packages
 for package in "${packages[@]}"; do
   if ! pip3 show "$package" &>/dev/null; then
       error_exit "Python package '$package' is not installed."
