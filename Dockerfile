@@ -50,8 +50,11 @@ RUN pip3 install -r requirements.txt
 # Make scripts executable
 RUN chmod +x ${HOME}/scripts/do_all.sh
 RUN chmod +x ${HOME}/scripts/smoke.sh
+RUN chmod +x ${HOME}/scripts/cleanup_paper_artefacts.sh
 RUN chmod +x ${HOME}/scripts/build_report.sh
 
+# Pull paper artefacts
+RUN git clone https://resources.oreilly.com/examples/9780596153946.git datasets/head_first_data_analysis_chap3
 
 # Clone report (into existing report/ directory)
 RUN git clone https://github.com/iTsluku/RepEng-SpreadsheetSolver-Report-.git report

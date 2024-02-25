@@ -6,8 +6,6 @@
 # without any warranty.
 # SPDX-License-Identifier: FSFAP
 
-SCRIPT_PATH=$(dirname $(realpath -s "$0"))
-
 # Print error message and exit
 function error_exit {
     echo "Smoke test failed! $1" >&2

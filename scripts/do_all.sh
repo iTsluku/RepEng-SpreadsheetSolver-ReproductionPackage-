@@ -12,6 +12,9 @@ PAPER_CONFIG_DIR="$SCRIPT_PATH/../configs/head_first_data_analysis_chap3/"
 echo "Running smoke test"
 (cd "$SCRIPT_PATH" && ./smoke.sh)
 
+echo "Removing unnecessary paper artefacts"
+(cd "$SCRIPT_PATH" && ./cleanup_paper_artefacts.sh)
+
 echo "Running experiments"
 for config_file in "$PAPER_CONFIG_DIR"*.yaml; do
     echo "Running "$(basename "$config_file")""
