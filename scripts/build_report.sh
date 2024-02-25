@@ -7,13 +7,15 @@
 # SPDX-License-Identifier: FSFAP
 
 SCRIPT_PATH=$(dirname $(realpath -s "$0"))
-PAPER_CONFIG_DIR="$SCRIPT_PATH/../configs/head_first_data_analysis_chap3/"
 
-echo "Running experiments"
-for config_file in "$PAPER_CONFIG_DIR"*.yaml; do
-    echo "Running "$(basename "$config_file")""
-    python "$SCRIPT_PATH"/../main.py --config "$config_file"
-done
+cd "$SCRIPT_PATH"/../report
 
-echo "Building report"
-cd "$SCRIPT_PATH" && ./build_report.sh
+# Run make report
+make report
+
+# Move report.pdf to shared_dir/ (potentially mounted volume)
+RUN test -d shared_dir || mkdir shared_dir
+mv report.pdf "$SCRIPT_PATH"/../shared_dir/
+
+# Run make clean
+make clean

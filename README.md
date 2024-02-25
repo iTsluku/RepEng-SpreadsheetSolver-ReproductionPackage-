@@ -8,7 +8,7 @@ This site provides the functional replication package which aims to replicate th
     > docker build -t spreadsheet-solver:1.0 .
 
 ## Run docker container and perform measurements
-- Run spreadsheet solver with paper configurations in docker container
+- Run spreadsheet solver with all three paper configurations in docker container
     > docker run --name spreadsheet-solver spreadsheet-solver:1.0
 
 ## Performing measurements in the Docker container
@@ -24,23 +24,28 @@ The following steps are identical for container-based run.
   ```
 - Exit container
     > exit
-
-
-## Mounting
+  
+## Mounting (to retrieve report.pdf or run custom scenario/config)
 The following steps are not relevant for the functional replication, but make it possible to configure new scenarios (independent of the original paper) outside the container, process them in the container and extract the artifacts from the container.
+Furthermore, mounting provides a convenient solution to retrieve the report/pdf.
 
 - Run docker container with volume mount in interactive mode
   ```bash
-  docker run -v /user/path/to/my_config_dir:/app/configs/my_config_dir/ \
+  docker run -v /user/path/to/shared_dir:/app/shared_dir/ \
              -it \
              --name spreadsheet-solver \
              spreadsheet-solver:1.0 \
              /bin/bash
   ```
 - Run spreadsheet solver with config from mounted directory
-    > python main.py --config "configs/my_config_dir/config.yaml"
+    > python main.py --config "shared_dir/my_special_config.yaml"
 - Exit container
     > exit
+
+## TODO
++ D1: smoke test
++ Volume mounting (-> retrieve report/pdf)
++ D2: .*
 
 ## License
 Copyright 2024, Andreas Einwiller <einwil01@ads.uni-passau.de>
