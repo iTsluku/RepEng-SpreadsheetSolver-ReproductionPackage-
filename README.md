@@ -9,13 +9,15 @@ This site provides the functional replication package which aims to replicate th
 
 ## Run docker container and perform measurements
 - Run spreadsheet solver with all three paper configurations in docker container
-    > docker run --name spreadsheet-solver spreadsheet-solver:1.0
+    > docker run --name spreadsheet-solver --rm spreadsheet-solver:1.0
 
 ## Performing measurements in the Docker container
 The following steps are identical for container-based run.
 
 - Access the container interactively
-    > docker run -it --name spreadsheet-solver spreadsheet-solver:1.0 /bin/bash
+    > docker run -it --name spreadsheet-solver --rm spreadsheet-solver:1.0 /bin/bash
+- Run dispatcher
+    > ./scripts/doAll.sh
 - Run spreadsheet solver with specified config w.r.t. paper scenario one, two or three
   ```bash
   python main.py --config "configs/head_first_data_analysis_chap3/scenario1.yaml"
@@ -25,27 +27,26 @@ The following steps are identical for container-based run.
 - Exit container
     > exit
   
-## Mounting (to retrieve report.pdf or run custom scenario/config)
+## Mounting (Retrieve report.pdf or run custom experiment)
 The following steps are not relevant for the functional replication, but make it possible to configure new scenarios (independent of the original paper) outside the container, process them in the container and extract the artifacts from the container.
 Furthermore, mounting provides a convenient solution to retrieve the report/pdf.
 
 - Run docker container with volume mount in interactive mode
   ```bash
-  docker run -v /user/path/to/shared_dir:/app/shared_dir/ \
+  docker run -v /abs/user/path/to/shared_dir:/app/shared_dir/ \
              -it \
              --name spreadsheet-solver \
+             --rm \
              spreadsheet-solver:1.0 \
              /bin/bash
   ```
-- Run spreadsheet solver with config from mounted directory
+- Run dispatcher
+    > ./scripts/doAll.sh
+- Report (report.pdf) will be in /abs/user/path/to/shared_dir/ (user) and /app/shared_dir/ (container)
+- Run spreadsheet solver with config of mounted volume
     > python main.py --config "shared_dir/my_special_config.yaml"
 - Exit container
     > exit
-
-## TODO
-+ D1: smoke test
-+ Volume mounting (-> retrieve report/pdf)
-+ D2: .*
 
 ## License
 Copyright 2024, Andreas Einwiller <einwil01@ads.uni-passau.de>

@@ -13,7 +13,7 @@ echo "Running smoke test"
 (cd "$SCRIPT_PATH" && ./smoke.sh)
 
 echo "Removing unnecessary paper artefacts"
-(cd "$SCRIPT_PATH" && ./cleanup_paper_artefacts.sh)
+(cd "$SCRIPT_PATH" && ./cleanupPaperArtefacts.sh)
 
 echo "Running experiments"
 for config_file in "$PAPER_CONFIG_DIR"*.yaml; do
@@ -22,4 +22,4 @@ for config_file in "$PAPER_CONFIG_DIR"*.yaml; do
 done
 
 echo "Building report"
-(cd "$SCRIPT_PATH" && ./build_report.sh)
+(cd "$SCRIPT_PATH" && ./buildReport.sh)

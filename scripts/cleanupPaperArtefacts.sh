@@ -16,6 +16,12 @@ if [ ! -d "$ARTEFACTS_DIR" ]; then
     exit 1
 fi
 
+# Remove unnecessary directories
+echo "Removing the __MACOSX directory and all its contents"
+find "$ARTEFACTS_DIR" -type d -name "__MACOSX" -exec rm -r {} + 2>/dev/null
+echo "Removing the hfda_data directory and all its contents"
+find "$ARTEFACTS_DIR" -type d -name "hfda_data" -exec rm -r {} + 2>/dev/null
+
 # Remove files (cleanup) that are not specified prior (files_keep)
 for file in "$ARTEFACTS_DIR"/*; do
     filename=$(basename "$file")
@@ -24,6 +30,3 @@ for file in "$ARTEFACTS_DIR"/*; do
         rm "$file"
     fi
 done
-
-echo "Removing all sub-directories recursively (__MACOSX,...) excluding .git/"
-find "$DIRECTORY_PATH" -type d -not -path "*/.git/*" -exec rm -r {} + 2>/dev/null

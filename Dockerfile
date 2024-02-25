@@ -48,10 +48,10 @@ ENV PATH="/app/venv/bin:${PATH}"
 RUN pip3 install -r requirements.txt
 
 # Make scripts executable
-RUN chmod +x ${HOME}/scripts/do_all.sh
+RUN chmod +x ${HOME}/scripts/doAll.sh
 RUN chmod +x ${HOME}/scripts/smoke.sh
-RUN chmod +x ${HOME}/scripts/cleanup_paper_artefacts.sh
-RUN chmod +x ${HOME}/scripts/build_report.sh
+RUN chmod +x ${HOME}/scripts/cleanupPaperArtefacts.sh
+RUN chmod +x ${HOME}/scripts/buildReport.sh
 
 # Pull paper artefacts
 RUN git clone https://resources.oreilly.com/examples/9780596153946.git datasets/head_first_data_analysis_chap3
@@ -61,4 +61,4 @@ RUN git clone https://github.com/iTsluku/RepEng-SpreadsheetSolver-Report-.git re
 RUN mv ${HOME}/scripts/Makefile ${HOME}/report/
 
 # Set default command that is run when the container is run based on this image
-CMD ${HOME}/scripts/do_all.sh
+CMD ${HOME}/scripts/doAll.sh
