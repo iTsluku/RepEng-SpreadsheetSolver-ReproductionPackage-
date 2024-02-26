@@ -22,6 +22,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     try:
         config = Config(args.config)
+        config_file_label:str = os.path.basename(args.config).split(".")[0] # rm prior path and file extension
         timeout = config.get_timeout()
         criterion = config.get_criterion()
         decision_variables = config.get_decision_variables(apply_constraints=True)
@@ -34,6 +35,7 @@ if __name__ == "__main__":
         )
         solver.solve()
         solver.print_solution()
+        solver.save_results_as_csv(config_file_label)
     except InvalidConfig as e:
         print(e)
     except Timeout as e:

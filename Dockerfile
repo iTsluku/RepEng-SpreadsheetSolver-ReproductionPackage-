@@ -51,6 +51,7 @@ RUN pip3 install -r requirements.txt
 RUN chmod +x ${HOME}/scripts/doAll.sh
 RUN chmod +x ${HOME}/scripts/smoke.sh
 RUN chmod +x ${HOME}/scripts/cleanupPaperArtefacts.sh
+RUN chmod +x ${HOME}/scripts/setupReport.sh
 RUN chmod +x ${HOME}/scripts/buildReport.sh
 
 # Pull paper artefacts

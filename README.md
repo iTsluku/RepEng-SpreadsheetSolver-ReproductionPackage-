@@ -5,17 +5,17 @@ This site provides the functional replication package which aims to replicate th
 - Clone the repository
     > git clone https://github.com/iTsluku/RepEng-SpeadsheetSolver-ReproductionPackage.git
 - Build the Docker image from scratch
-    > docker build -t spreadsheet-solver:1.0 .
+    > docker build -t spreadsheet-solver:1.1 .
 
 ## Run docker container and perform measurements
 - Run spreadsheet solver with all three paper configurations in docker container
-    > docker run --name spreadsheet-solver --rm spreadsheet-solver:1.0
+    > docker run --name spreadsheet-solver --rm spreadsheet-solver:1.1
 
 ## Performing measurements in the Docker container
 The following steps are identical for container-based run.
 
 - Access the container interactively
-    > docker run -it --name spreadsheet-solver --rm spreadsheet-solver:1.0 /bin/bash
+    > docker run -it --name spreadsheet-solver --rm spreadsheet-solver:1.1 /bin/bash
 - Run dispatcher
     > ./scripts/doAll.sh
 - Run spreadsheet solver with specified config w.r.t. paper scenario one, two or three
@@ -29,7 +29,7 @@ The following steps are identical for container-based run.
   
 ## Mounting (Retrieve report.pdf or run custom experiment)
 The following steps are not relevant for the functional replication, but make it possible to configure new scenarios (independent of the original paper) outside the container, process them in the container and extract the artifacts from the container.
-Furthermore, mounting provides a convenient solution to retrieve the report/pdf.
+Furthermore, mounting provides a convenient solution to retrieve the report.
 
 - Run docker container with volume mount in interactive mode
   ```bash
@@ -37,7 +37,7 @@ Furthermore, mounting provides a convenient solution to retrieve the report/pdf.
              -it \
              --name spreadsheet-solver \
              --rm \
-             spreadsheet-solver:1.0 \
+             spreadsheet-solver:1.1 \
              /bin/bash
   ```
 - Run dispatcher

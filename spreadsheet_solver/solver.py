@@ -6,6 +6,7 @@ notice and this notice are preserved.  This file is offered as-is,
 without any warranty. \
 SPDX-License-Identifier: FSFAP
 '''
+import csv
 import signal
 from typing import List
 
@@ -35,6 +36,14 @@ class Solver:
     def epsilon_comp_val() -> float:
         """TODO docstring"""
         return 1e-7
+
+    @staticmethod
+    def check_paper_scenario(label: str) -> str:
+        """TODO docstring"""
+        paper_mapping = {"scenario1": "Scenario 1", "scenario2": "Scenario 2", "scenario3": "Scenario 3"}
+        if label in paper_mapping:
+            return paper_mapping[label]
+        return label
 
     def __init__(
         self,
@@ -188,6 +197,35 @@ class Solver:
         for decision_variable in self.decision_variables:
             print(decision_variable)
         print("")
+
+    def save_results_as_csv(self,label:str)->None:
+        """TODO docstring"""
+        if self.optimum is None:
+            return
+        results = [{"Scenario": Solver.check_paper_scenario(label)}]
+        fieldnames = ["Scenario"]
+        for decision_variable in self.decision_variables:
+            key:str = decision_variable.name.capitalize()+" Count"
+            fieldnames.append(key)
+            results[0][key]=decision_variable.value
+
+        # float -> int type conversion for cleaner tables
+        epsilon:float = Solver.epsilon_comp_val()
+        optimum = self.optimum
+        if abs(optimum - round(optimum)) <= epsilon:
+            optimum=int(round(optimum,1))
+
+        fieldnames.append("Total Profit")
+        results[0]["Total Profit"]=optimum
+
+        filename = f"datasets/replication/{label}.csv"
+        # Write data to CSV file
+        with open(filename, mode="w", newline="") as file:
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            for row in results:
+                writer.writerow(row)
+        print(f"Results have been successfully stored in {filename}.")
 
     def timeout_handler(self, signum, frame):
         """TODO docstring"""

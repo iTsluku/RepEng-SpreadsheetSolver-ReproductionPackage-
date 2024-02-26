@@ -21,5 +21,8 @@ for config_file in "$PAPER_CONFIG_DIR"*.yaml; do
     python "$SCRIPT_PATH"/../main.py --config "$config_file"
 done
 
+echo "Preparing the report environment"
+(cd "$SCRIPT_PATH" && ./setupReport.sh)
+
 echo "Building report"
 (cd "$SCRIPT_PATH" && ./buildReport.sh)
