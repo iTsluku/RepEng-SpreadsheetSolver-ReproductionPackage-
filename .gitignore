@@ -3,6 +3,8 @@ shared_dir/
 report/
 datasets/dev/
 datasets/head_first_data_analysis_chap3/
+datasets/replication/*
+!datasets/replication/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
