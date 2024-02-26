@@ -1,11 +1,11 @@
-'''License notice
+"""License notice
 Copyright 2024, Andreas Einwiller <einwil01@ads.uni-passau.de> \
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
 notice and this notice are preserved.  This file is offered as-is,
 without any warranty. \
 SPDX-License-Identifier: FSFAP
-'''
+"""
 from typing import List, Tuple, Optional
 
 from spreadsheet_solver import InvalidConfig
@@ -21,24 +21,25 @@ class DecisionVariable:
     # call DecisionVariable.allowed_comparison_operators()
     @staticmethod
     def allowed_comparison_operators() -> List[str]:
-        """TODO docstring"""
+        """Get allowed comparison operators."""
         return ["<", "<=", ">", ">="]
 
     def __init__(self, name: str, unit_profit: float) -> None:
-        """TODO docstring"""
+        """Construct decision variable."""
         self.name: str = name
         self.unit_profit: float = float(unit_profit)
 
     def __str__(self) -> str:
-        """TODO docstring"""
+        """String representation of decision variable."""
         return (
             f"Decision Variable: name={self.name}, count={self.value}, unit profit={self.unit_profit}, "
             f"constraint=[{self.lower_bound}, {self.upper_bound}]"
         )
 
     def apply_constraint(self, comparison_operator: str, value: int) -> None:
-        """TODO docstring"""
+        """Apply constraints to decision variable by updating lower and upper bound."""
         from typing import List, Tuple, Optional
+
         if comparison_operator not in DecisionVariable.allowed_comparison_operators():
             raise InvalidConfig(
                 (
@@ -81,7 +82,7 @@ class ConstraintVariable:
 
     @staticmethod
     def allowed_comparison_operators() -> List[str]:
-        """TODO docstring"""
+        """Get allowed comparison operators of constraint variable."""
         return ["<", "<=", ">", ">="]
 
     def __init__(
@@ -91,7 +92,7 @@ class ConstraintVariable:
         comparison_operator: str,
         constraint_value: float,
     ):
-        """TODO docstring"""
+        """Constructor of constraint variable."""
         self.name: str = name
         # decision variable name (lookup value later), decision varibale cost
         self.dependencies: List[Tuple[str, float]] = dependencies
@@ -104,7 +105,7 @@ class ConstraintVariable:
         self.constraint_value: float = float(constraint_value)
 
     def __str__(self):
-        """TODO docstring"""
+        """String representation of constraint variable."""
         _repr = ""
         _repr += f"Constraint Variable: name={self.name}, constraint="
         for dv_name, dv_cost in self.dependencies:

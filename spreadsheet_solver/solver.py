@@ -1,11 +1,11 @@
-'''License notice
+"""License notice
 Copyright 2024, Andreas Einwiller <einwil01@ads.uni-passau.de> \
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
 notice and this notice are preserved.  This file is offered as-is,
 without any warranty. \
 SPDX-License-Identifier: FSFAP
-'''
+"""
 import csv
 import signal
 from typing import List
@@ -28,19 +28,23 @@ class Solver:
     # call Solver.allowed_criteria()
     @staticmethod
     def allowed_criteria() -> List[str]:
-        """TODO docstring"""
+        """Allowed criteria of solver."""
         return ["max", "min"]
 
     # call Solver.epsilon_comp_val()
     @staticmethod
     def epsilon_comp_val() -> float:
-        """TODO docstring"""
+        """Epsilon value for float comparison (provide delta)."""
         return 1e-7
 
     @staticmethod
     def check_paper_scenario(label: str) -> str:
-        """TODO docstring"""
-        paper_mapping = {"scenario1": "Scenario 1", "scenario2": "Scenario 2", "scenario3": "Scenario 3"}
+        """String mapping for output label."""
+        paper_mapping = {
+            "scenario1": "Scenario 1",
+            "scenario2": "Scenario 2",
+            "scenario3": "Scenario 3",
+        }
         if label in paper_mapping:
             return paper_mapping[label]
         return label
@@ -52,7 +56,7 @@ class Solver:
         decision_variables: dict,
         constraint_variables: dict,
     ):
-        """TODO docstring"""
+        """Constructor for spreadsheet solver."""
         self.timeout = timeout
         if criterion not in Solver.allowed_criteria():
             raise InvalidConfig(
@@ -91,7 +95,7 @@ class Solver:
         self.optimal_decision_variable_values = []
 
     def any_violated_constraints(self) -> bool:
-        """TODO docstring"""
+        """Check if current (inplace) count values of decision variables violate any constraints."""
         if self.constraint_variables is None:
             return False
         for (
@@ -122,14 +126,14 @@ class Solver:
         return False
 
     def objective_function(self) -> float:
-        """TODO docstring"""
+        """Criterion for optimization problem."""
         result = 0
         for decision_variable in self.decision_variables:
             result += decision_variable.unit_profit * decision_variable.value
         return result
 
     def brute_force(self, index=0) -> None:
-        """TODO docstring"""
+        """Naive brute-force algorithm to solve linear programming problem."""
         # solver method
         # lin prog optimization
         # generate nested for loop over all decision variables
@@ -167,7 +171,7 @@ class Solver:
                 self.optimal_decision_variable_values = optimal_dv_values
 
     def set_optimal_decision_variable_values(self) -> None:
-        """TODO docstring"""
+        """Setter for final decision variable counts once optimum has been determined."""
         # can only set values if there is a solution to the problem
         if self.optimum is not None:
             for index, optimal_decision_variable_value in enumerate(
@@ -176,7 +180,7 @@ class Solver:
                 self.decision_variables[index].value = optimal_decision_variable_value
 
     def print_solution(self):
-        """TODO docstring"""
+        """Print spreadsheet solver (optimal) solution to standard output."""
         if self.optimum is None:
             print("Objective could not be solved.")
             return
@@ -198,25 +202,25 @@ class Solver:
             print(decision_variable)
         print("")
 
-    def save_results_as_csv(self,label:str)->None:
-        """TODO docstring"""
+    def save_results_as_csv(self, label: str) -> None:
+        """Save spreadsheet solver (optimal) solution as csv."""
         if self.optimum is None:
             return
         results = [{"Scenario": Solver.check_paper_scenario(label)}]
         fieldnames = ["Scenario"]
         for decision_variable in self.decision_variables:
-            key:str = decision_variable.name.capitalize()+" Count"
+            key: str = decision_variable.name.capitalize() + " Count"
             fieldnames.append(key)
-            results[0][key]=decision_variable.value
+            results[0][key] = decision_variable.value
 
         # float -> int type conversion for cleaner tables
-        epsilon:float = Solver.epsilon_comp_val()
+        epsilon: float = Solver.epsilon_comp_val()
         optimum = self.optimum
         if abs(optimum - round(optimum)) <= epsilon:
-            optimum=int(round(optimum,1))
+            optimum = int(round(optimum, 1))
 
         fieldnames.append("Total Profit")
-        results[0]["Total Profit"]=optimum
+        results[0]["Total Profit"] = optimum
 
         filename = f"datasets/replication/{label}.csv"
         # Write data to CSV file
@@ -228,11 +232,11 @@ class Solver:
         print(f"Results have been successfully stored in {filename}.")
 
     def timeout_handler(self, signum, frame):
-        """TODO docstring"""
+        """timeout handler."""
         raise TimeoutError(f"Solver function timed out after {self.timeout} seconds.")
 
     def solve(self) -> None:
-        """TODO docstring"""
+        """Solver entry-point."""
         signal.signal(signal.SIGALRM, self.timeout_handler)
         signal.alarm(self.timeout)
         try:

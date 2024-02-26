@@ -1,11 +1,11 @@
-'''License notice
+"""License notice
 Copyright 2024, Andreas Einwiller <einwil01@ads.uni-passau.de> \
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
 notice and this notice are preserved.  This file is offered as-is,
 without any warranty. \
 SPDX-License-Identifier: FSFAP
-'''
+"""
 
 import yaml
 
@@ -15,9 +15,10 @@ from spreadsheet_solver.data_types import DecisionVariable, ConstraintVariable
 
 
 class Config:
-    """TODO docstring"""
+    """Config parser replacing Excel solver spreadsheet and GUI."""
+
     def __init__(self, path: str):
-        """TODO docstring"""
+        """Load yaml file and validate."""
         with open(path, "r") as file:
             self.data = yaml.safe_load(file)
         try:
@@ -26,7 +27,7 @@ class Config:
             raise InvalidConfig(e.message)
 
     def validate(self):
-        """TODO docstring"""
+        """Validate yaml file format/contents."""
         for key in [
             "timeout",
             "criterion",
@@ -74,15 +75,15 @@ class Config:
             )
 
     def get_criterion(self) -> str:
-        """TODO docstring"""
+        """Get criterion, i.e., min or max."""
         return self.data["criterion"]
 
     def get_timeout(self) -> int:
-        """TODO docstring"""
+        """get timeout parameter, default: 10s."""
         return self.data["timeout"]
 
     def get_decision_variables(self, apply_constraints: bool) -> dict:
-        """TODO docstring"""
+        """Get decision variables parsed of config."""
         # List[Tuple[str, float]] -> dict
         decision_variables: dict = {}
         for dv_name, dv_unit_profit in self.data["decision_variables"]:
@@ -113,13 +114,13 @@ class Config:
         return decision_variables
 
     def get_decision_variable_constraints(self) -> List[Tuple[str, str, int]]:
-        """TODO docstring"""
+        """Get decision variable constraints parsed of config."""
         return self.data["decision_variable_constraints"]
 
     def get_constraint_variables(
         self,
     ) -> Optional[dict]:
-        """TODO docstring"""
+        """Get constraint variables parsed of config."""
         # Optional[List[Tuple[str, List[Tuple[str, float]], str, float]]] -> Optional[dict]
         if self.data["constraint_variables"] is None:
             return None
